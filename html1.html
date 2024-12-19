@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nested Dialog Example</title>
+  </head>
+  <body>
+    <div>
+      <!-- Main Dialog -->
+      <dialog id="myPopup">
+        <p>Test Popup</p>
+        <button id="openBtn1">Open Nested Dialog</button>
+      </dialog>
+    </div>
+
+    <button id="openBtn">Open Main Dialog</button>
+
+    <script>
+      const dialog = document.getElementById("myPopup");
+      const openBtn = document.getElementById("openBtn");
+      const openBtn1 = document.getElementById("openBtn1");
+
+      // Event listener to open the main dialog
+      openBtn.addEventListener("click", () => {
+        dialog.showModal();
+      });
+
+      // Event listener to dynamically add and open a nested dialog
+      openBtn1.addEventListener("click", () => {
+        // Create a new dialog element
+        const nestedDialog = document.createElement("dialog");
+        nestedDialog.innerHTML = `
+          <p>This is a nested dialog!</p>
+          <button id="closeNestedDialog">Close</button>
+        `;
+        document.body.appendChild(nestedDialog);
+
+        // Show the nested dialog
+        nestedDialog.showModal();
+
+        // Add close functionality for the nested dialog
+        const closeNestedDialog =
+          nestedDialog.querySelector("#closeNestedDialog");
+        closeNestedDialog.addEventListener("click", () => {
+          nestedDialog.close();
+          nestedDialog.remove(); // Remove the nested dialog from the DOM
+        });
+      });
+    </script>
+  </body>
+</html>
